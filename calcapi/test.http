@@ -1,0 +1,25 @@
+GET http://localhost:5000/hello/inoue.json
+
+###
+POST http://localhost:5000/hello3
+Content-Type: application/json
+
+{
+    "name": "inoue"
+}
+
+###
+POST http://localhost:5000/wareki2
+Content-Type: application/json
+
+{
+    "seireki": 2000
+}
+
+###
+POST http://localhost:5000/item
+Content-Type: application/json
+
+{
+    "code": "A01"
+}

@@ -1,0 +1,5 @@
+{
+    "A01": {"price": 100, "keigen": true},
+    "A02": {"price": 200, "keigen": true},
+    "B01": {"price": 1000, "keigen": false}
+}

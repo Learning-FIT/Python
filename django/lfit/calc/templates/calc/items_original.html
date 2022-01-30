@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品</title>
+</head>
+<body>
+    <h1>商品一覧</h1>
+    <ul>
+        <li><a href="{% url 'calc:add_item' %}">新規作成</a></li>
+    </ul>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>商品コード</th>
+                <th>商品名</th>
+                <th>単価</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td><a href="{% url 'calc:item' item.id %}">{{ item.code }}</a></td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

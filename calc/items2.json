@@ -1,0 +1,5 @@
+{
+    "A01": {"name": "コーヒー", "price": 100, "keigen": true},
+    "A02": {"name": "カフェオレ", "price": 200, "keigen": true},
+    "B01": {"name": "マウス", "price": 1000, "keigen": false}
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品新規作成</title>
+</head>
+<body>
+    <h1>商品新規作成</h1>
+    <ul>
+        <li><a href="{% url 'calc:items' %}">商品一覧に戻る</a></li>
+    </ul>
+    <p>{{ message }}</p>
+    <form action="{% url 'calc:add_item' %}" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="保存">
+    </form>
+</body>
+</html>
