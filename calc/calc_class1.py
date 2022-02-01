@@ -61,7 +61,9 @@ class OrderLine:
         print_lines.append(f"商品コード：{self.code} 商品名：{self.name:　<10} 単価：{self.price:>5,}")
         print_lines.append(f" 個数：{self.count:>3,} 小計：{self.calc_sum():>8,}")
         if self.keigen:
-            print_lines.append(f' 税額：{self.calc_tax():>6,} ＜軽減＞')
+            str = f' 税額：{self.calc_tax():>6,}'
+            str += ' ＜軽減＞' if self.keigen == 'y' else ''
+            print_lines.append(str)
         else:
             print_lines.append(f' 税額：{self.calc_tax():>6,}')
         return print_lines
