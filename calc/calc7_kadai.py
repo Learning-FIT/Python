@@ -51,7 +51,7 @@ def main():
                         exit(3)
                     tax = calcTax(sum, keigen == 'y')
                     tax_sum += tax
-                    f.write(f' 税額：{tax:>6,})
+                    f.write(f' 税額：{tax:>6,}')
                     f.write(' ＜軽減＞' if keigen == 'y' else '')
                 else:
                     tax = calcTax(sum, keigen == 'y')
