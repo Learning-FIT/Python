@@ -8,8 +8,9 @@ RESULT_PATH = 'result'
 tax_rate = [0, 0]
 
 class Order:
-    __lines = []
-    
+    def __init__(self):
+        self.__lines = []
+
     def add_line(self, line):
         # OrderLinesオブジェクトを追加します
         pass

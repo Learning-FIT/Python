@@ -50,7 +50,7 @@ def main():
                         print('yかnで入力してください')
                         exit(3)
                     tax_sum += calcTax(sum, keigen == 'y')
-                    f.write(' ＜軽減＞')
+                    f.write(' ＜軽減＞' if keigen == 'y' else '')
                 else:
                     tax_sum += calcTax(sum, False)
 

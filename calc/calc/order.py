@@ -1,6 +1,7 @@
 class Order:
-    __lines = []
-    
+    def __init__(self):
+        self.__lines = []
+
     def add_line(self, line):
         # OrderLinesオブジェクトを追加します
         self.__lines.append(line)
