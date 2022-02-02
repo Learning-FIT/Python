@@ -81,12 +81,14 @@ def index(request):
                     if form.cleaned_data['name'] != '':
                         q_obj.add(
                             Q(name__contains=form.cleaned_data['name']), Q.OR)
+                    q_price = Q()
                     if form.cleaned_data['price_min'] != '':
-                        items = items.filter(price__gte=int(
-                            form.cleaned_data['price_min']))
+                        q_price.add(Q(price__gte=int(form.cleaned_data['price_min'])), Q.AND)
                     if form.cleaned_data['price_max'] != '':
-                        items = items.filter(price__lte=int(
-                            form.cleaned_data['price_max']))
+                        q_price.add(Q(price__lte=int(form.cleaned_data['price_max'])), Q.AND)
+                    q_obj.add(q_price, Q.AND)
+                    print(items.filter(q_obj).query)
+                    items = items.filter(q_obj)
                 if len(items) < 1:
                     message = '商品が見つかりません'
     else:
