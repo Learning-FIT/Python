@@ -1,10 +1,4 @@
-from flask import Flask, render_template, request, jsonify, Response
-import json
-import mysql.connector
-import os
-import datetime
-from calc.order import Order
-from calc.order_line import OrderLine
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
