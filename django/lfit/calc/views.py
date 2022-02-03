@@ -100,3 +100,19 @@ def index(request):
         'message': message,
     }
     return HttpResponse(render(request, 'calc/index.html', context=context))
+
+def line(request, item_id):
+    item = get_object_or_404(Item, pk=item_id)
+    if request.method == 'POST':
+        form = LineForm()
+        if form.is_valid():
+            pass
+    else:
+        form = LineForm()
+
+    context = {
+        'item': item,
+        'form': form,
+    }
+    return HttpResponse(render(request, 'calc/line.html', context=context))
+    

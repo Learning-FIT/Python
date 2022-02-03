@@ -1,0 +1,29 @@
+{% extends 'calc/layout.html' %}
+{% block title %}明細登録{% endblock %}
+
+{% block content %}
+<h1>明細登録</h1>
+<ul class="nav">
+    <li class="nav-item"><a class="nav-link" href="{% url 'calc:index' %}">商品検索</a></li>
+</ul>
+<table class="table">
+    <thead>
+        <tr>
+            <th>商品コード</th>
+            <th>品名</th>
+            <th>単価</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ item.code }}</td>
+            <td>{{ item.name }}</a></td>
+            <td>{{ item.price }}</td>
+        </tr>
+    </tbody>
+</table>
+<form action="{% url 'calc:line' item.id %}" method="POST">
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-primary" value="登録">
+</form>
+{% endblock %}

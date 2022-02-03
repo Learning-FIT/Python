@@ -19,3 +19,6 @@ class ItemSearchForm(forms.Form):
     CHOICES = [('and', 'AND条件で検索'), ('or', 'OR条件で検索')]
     condition = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect, initial='and')
+
+class LineForm(forms.Form):
+    count = forms.IntegerField(label='個数', required=True)
