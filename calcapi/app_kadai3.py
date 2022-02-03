@@ -12,7 +12,7 @@ def item():
     code = payload['code']
 
     with mysql.connector.connect(
-            host=os.environ['MYSQL_HOST'], user=os.environ['MYSQL_USER'], password=os.environ['MYSQL_PASS'], database=os.environ['MYSQL_DATABASE']) as conn:
+            host=os.environ['MYSQL_HOST'], port=os.environ['MYSQL_PORT'], user=os.environ['MYSQL_USER'], password=os.environ['MYSQL_PASS'], database=os.environ['MYSQL_DATABASE']) as conn:
         with conn.cursor(dictionary=True) as cur:
             cur.execute('SELECT * FROM items WHERE code=%s', (code,))
             row = cur.fetchone()

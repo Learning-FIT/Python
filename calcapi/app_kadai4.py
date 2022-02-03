@@ -3,6 +3,7 @@ import mysql.connector
 import datetime
 from calc.order import Order
 from calc.order_line import OrderLine
+import os
 
 app = Flask(__name__)
 
@@ -22,11 +23,7 @@ def save_order():
 
     # MySQLに接続して保存する
     with mysql.connector.connect(
-        host='localhost',
-        port=3306,
-        user='root',
-        password='password',
-        database='calc') as conn:
+            host=os.environ['MYSQL_HOST'], port=os.environ['MYSQL_PORT'], user=os.environ['MYSQL_USER'], password=os.environ['MYSQL_PASS'], database=os.environ['MYSQL_DATABASE']) as conn:
 
         with conn.cursor(dictionary=True) as cur:
             # Orderインスタンスの内容をordersテーブルへの書き込み
