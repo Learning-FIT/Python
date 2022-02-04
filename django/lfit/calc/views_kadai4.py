@@ -8,10 +8,9 @@ def add_item(request):
         form = ItemForm(request.POST)
         if form.is_valid():
             form.save()
-            message = '保存しました'
+            return redirect('calc:items')
         else:
             message = 'エラーがあります'
-        return redirect('calc:items')
     else:
         form = ItemForm()
         message = ''
