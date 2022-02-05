@@ -2,6 +2,7 @@ from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
+from django.contrib import messages
 from .models import *
 from .forms import *
 
@@ -48,28 +49,28 @@ def item(request, item_id):
     return HttpResponse(render(request, 'calc/item.html', context=context))
 '''
 
+def add_item(request):
+    pass
+
 def index(request):
-    message = ''
+    items = []
     if request.method == 'POST':
         form = ItemSearchForm(request.POST)
         if form.is_valid():
             #items = Item.objects.filter(code=form.cleaned_data['code'])
-            if form.cleaned_data['code'] == '' and form.cleaned_data['name'] == '' and form.cleaned_data['price_min'] == '' and form.cleaned_data['price_max'] == '':
-                message = '商品コードか品名か価格のいずれかを入力してください'
+            if form.cleaned_data['code'] == '' and form.cleaned_data['name'] == '' and form.cleaned_data['price_min'] is None and form.cleaned_data['price_max'] is None:
+                messages.error(request, '商品コードか品名か価格のいずれかを入力してください')
             else:
-                items = Item.objects
+                items = Item.objects.all()
                 if form.cleaned_data['condition'] == 'and':
                     if form.cleaned_data['code'] != '':
                         items = items.filter(code=form.cleaned_data['code'])
                     if form.cleaned_data['name'] != '':
-                        items = items.filter(
-                            name__contains=form.cleaned_data['name'])
-                    if form.cleaned_data['price_min'] != '':
-                        items = items.filter(price__gte=int(
-                            form.cleaned_data['price_min']))
-                    if form.cleaned_data['price_max'] != '':
-                        items = items.filter(price__lte=int(
-                            form.cleaned_data['price_max']))
+                        items = items.filter(name__contains=form.cleaned_data['name'])
+                    if form.cleaned_data['price_min'] != None:
+                        items = items.filter(price__gte=int(form.cleaned_data['price_min']))
+                    if form.cleaned_data['price_max'] != None:
+                        items = items.filter(price__lte=int(form.cleaned_data['price_max']))
                 else:
                     q_obj = Q()
                     if form.cleaned_data['code'] != '':
@@ -78,31 +79,39 @@ def index(request):
                         q_obj.add(
                             Q(name__contains=form.cleaned_data['name']), Q.OR)
                     q_price = Q()
-                    if form.cleaned_data['price_min'] != '':
+                    if form.cleaned_data['price_min'] != None:
                         q_price.add(Q(price__gte=int(form.cleaned_data['price_min'])), Q.AND)
-                    if form.cleaned_data['price_max'] != '':
+                    if form.cleaned_data['price_max'] != None:
                         q_price.add(Q(price__lte=int(form.cleaned_data['price_max'])), Q.AND)
                     q_obj.add(q_price, Q.AND)
                     print(items.filter(q_obj).query)
                     items = items.filter(q_obj)
                 if len(items) < 1:
-                    message = '商品が見つかりません'
+                    messages.info(request, '商品が見つかりません')
+        else:
+            messages.error(request, '入力エラーがあります')
     else:
         form = ItemSearchForm()
-        items = []
     context = {
         'form': form,
         'items': items,
-        'message': message,
     }
     return HttpResponse(render(request, 'calc/index.html', context=context))
 
 def line(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     if request.method == 'POST':
-        form = LineForm()
+        form = LineForm(request.POST)
         if form.is_valid():
-            pass
+            lines = request.session.get('lines', [])
+            lines.append({
+                'item_id': item_id,
+                'count': form.cleaned_data['count']
+            })
+            request.session['lines'] = lines
+            return redirect('calc:index')
+        else:
+            print(form.errors)
     else:
         form = LineForm()
 
@@ -111,3 +120,17 @@ def line(request, item_id):
         'form': form,
     }
     return HttpResponse(render(request, 'calc/line.html', context=context))
+
+def cart(request):
+    order_lines = []
+    lines = request.session.get('lines', [])
+    for line in lines:
+        item = Item.objects.get(pk=line['item_id'])
+        order_line = OrderLine()
+        order_line.item = item
+        order_line.count = line['count']
+        order_lines.append(order_line)
+    context = {
+        'order_lines': order_lines,
+    }
+    return HttpResponse(render(request, 'calc/cart.html', context=context))

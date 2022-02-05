@@ -3,7 +3,11 @@
 
 {% block content %}
 <h1>商品検索</h1>
-<div class="alert alert-light">{{ message }}</div>
+
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+{% endfor %}
+
 <form action="{% url 'calc:index' %}" method="POST">
     {% csrf_token %}
     {% for item in form %}
