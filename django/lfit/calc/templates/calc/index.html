@@ -4,11 +4,6 @@
 {% block content %}
 <h1>商品検索</h1>
 {% include 'calc/nav.html' %}
-
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
-{% endfor %}
-
 <form action="{% url 'calc:index' %}" method="POST">
     {% csrf_token %}
     <div class="row" style="margin-bottom: 1em;">
@@ -43,7 +38,7 @@
     <tbody>
         {% for item in items %}
         <tr>
-            <td><a href="{% url 'calc:line' item.id %}">{{ item.code }}</a></td>
+            <td>{{ item.code }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
         </tr>
