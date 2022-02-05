@@ -20,4 +20,5 @@ urlpatterns = [
     path('hello/', include('hello.urls')),
     path('calc/', include('calc.urls')),
     path('admin/', admin.site.urls),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
