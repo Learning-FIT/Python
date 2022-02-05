@@ -1,9 +1,9 @@
 import os
 
-# tax_rate = [0, 0]
+tax_rate = [0, 0]
 
 # .envを使う
-tax_rate = [int(os.environ['TAX_RATE']), int(os.environ['TAX_RATE_KEIGEN'])]
+# tax_rate = [int(os.environ['TAX_RATE']), int(os.environ['TAX_RATE_KEIGEN'])]
 
 class OrderLine:
     def __init__(self, code, name, price, count, keigen):

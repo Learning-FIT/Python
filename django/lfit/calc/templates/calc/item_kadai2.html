@@ -8,6 +8,10 @@
 </head>
 <body>
     <h1>商品</h1>
+    <ul>
+        <li><a href="{% url 'calc:items' %}">商品一覧に戻る</a></li>
+    </ul>
+    <p>{{ message }}</p>
     <form action="{% url 'calc:item' item_id %}" method="POST">
         {% csrf_token %}
         <table>
