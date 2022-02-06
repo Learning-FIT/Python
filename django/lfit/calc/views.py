@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
+import datetime
+from django.utils.timezone import make_aware
 from .models import *
 from .forms import *
 
@@ -148,4 +150,37 @@ def cart_clear(request):
     return redirect('calc:index')
 
 def order(request):
-    pass
+    order_lines = []
+    lines = request.session.get('lines', [])
+
+    if request.method == 'POST':
+        order = Order()
+        order.order_datetime = make_aware(datetime.datetime.now())
+        order.save()
+        for line in lines:
+            item = Item.objects.get(pk=line['item_id'])
+            order_line = OrderLine()
+            order_line.order = order
+            order_line.item = item
+            order_line.price = item.price
+            order_line.count = line['count']
+            order_line.save()
+        del request.session['lines']
+        messages.success(request, '注文しました')
+        return redirect('calc:index')
+
+    total_sum = 0
+    for line in lines:
+        item = Item.objects.get(pk=line['item_id'])
+        order_line = OrderLine()
+        order_line.item = item
+        order_line.price = item.price
+        order_line.count = line['count']
+        order_lines.append(order_line)
+        total_sum += order_line.sum()
+
+    context = {
+        'order_lines': order_lines,
+        'total_sum': total_sum,
+    }
+    return HttpResponse(render(request, 'calc/order.html', context=context))

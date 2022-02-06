@@ -1,0 +1,38 @@
+{% extends 'calc/layout.html' %}
+{% load humanize %}
+{% block title %}注文{% endblock %}
+
+{% block content %}
+<h1>注文</h1>
+{% include 'calc/nav.html' %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>商品コード</th>
+            <th>商品名</th>
+            <th>単価</th>
+            <th>個数</th>
+            <th>小計</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order_line in order_lines %}
+        <tr>
+            <td>{{ order_line.item.code }}</td>
+            <td>{{ order_line.item.name }}</td>
+            <td>{{ order_line.item.price|intcomma }}</td>
+            <td>{{ order_line.count }}</td>
+            <td>{{ order_line.sum|intcomma }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <th colspan="4">合計金額</th>
+            <th>{{ total_sum|intcomma }}</th>
+        </tr>
+    </tbody>
+</table>
+<form action="{% url 'calc:order' %}" method="post" style="text-align: center; margin-top: 3em;">
+    {% csrf_token %}
+    <input type="submit" value="注文する" class="btn btn-primary">
+</form>
+{% endblock %}
