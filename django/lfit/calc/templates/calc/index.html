@@ -38,7 +38,7 @@
     <tbody>
         {% for item in items %}
         <tr>
-            <td>{{ item.code }}</td>
+            <td><a href="{% url 'calc:line' item.id %}">{{ item.code }}</a></td>
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
         </tr>

@@ -3,9 +3,7 @@
 
 {% block content %}
 <h1>明細登録</h1>
-<ul class="nav">
-    <li class="nav-item"><a class="nav-link" href="{% url 'calc:index' %}">商品検索</a></li>
-</ul>
+{% include 'calc/nav.html' %}
 <table class="table">
     <thead>
         <tr>
@@ -23,6 +21,7 @@
     </tbody>
 </table>
 <form action="{% url 'calc:line' item.id %}" method="POST">
+    {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" class="btn btn-primary" value="登録">
 </form>

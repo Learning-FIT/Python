@@ -124,13 +124,28 @@ def line(request, item_id):
 def cart(request):
     order_lines = []
     lines = request.session.get('lines', [])
+
+    total_sum = 0
     for line in lines:
         item = Item.objects.get(pk=line['item_id'])
         order_line = OrderLine()
         order_line.item = item
+        order_line.price = item.price
         order_line.count = line['count']
         order_lines.append(order_line)
+        total_sum += order_line.sum()
+
     context = {
         'order_lines': order_lines,
+        'total_sum': total_sum,
     }
     return HttpResponse(render(request, 'calc/cart.html', context=context))
+
+def cart_clear(request):
+    if 'lines' in request.session:
+        del request.session['lines']
+    messages.info(request, 'ショッピングカートを空にしました')
+    return redirect('calc:index')
+
+def order(request):
+    pass
