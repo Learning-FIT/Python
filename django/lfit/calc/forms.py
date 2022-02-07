@@ -4,10 +4,11 @@ from .models import *
 
 
 class ItemForm(forms.ModelForm):
+    #image = forms.ImageField(required=False)
+
     class Meta:
         model = Item
-        fields = ['code', 'name', 'price']
-
+        fields = ['code', 'name', 'price', 'image']
 
 class ItemSearchForm(forms.Form):
     code = forms.CharField(label='商品コード', required=False)

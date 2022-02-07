@@ -6,8 +6,7 @@
 <ul class="nav">
     <li class="nav-item"><a class="nav-link" href="{% url 'calc:items' %}">商品一覧に戻る</a></li>
 </ul>
-<div class="alert alert-light">{{ message }}</div>
-<form action="{% url 'calc:item' item_id %}" method="POST">
+<form enctype="multipart/form-data" action="{% url 'calc:item' item_id %}" method="POST">
     {% csrf_token %}
     {% for item in form %}
     <div class="mb-3">
@@ -17,8 +16,13 @@
             {% if item.value %}value="{{ item.value }}"{% endif %}
             {% if item.field.required %}required{% endif %}>
             {{ item.errors }}
-      </div>
+    </div>
     {% endfor %}
+    {% if item.image %}
+    <div class="mb-3" style="width: 320px;">
+        <img class="img-fluid" src="{{ item.image.url }}">
+    </div>
+    {% endif %}
     <input type="submit" class="btn btn-primary" value="保存">
 </form>
 {% endblock %}

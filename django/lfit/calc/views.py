@@ -18,41 +18,40 @@ def items(request):
 
 
 def item(request, item_id):
-    item = Item.objects.get(pk=item_id)
+    item = get_object_or_404(Item, pk=item_id)
     if request.method == 'POST':
-        form = ItemForm(request.POST, instance=item)
-        form.save()
+        form = ItemForm(request.POST, request.FILES, instance=item)
+        if form.is_valid():
+            item = form.save()
+            messages.success(request, '保存しました')
+        else:
+            print(form.errors)
+            messages.error(request, 'エラーがあります')
     else:
         form = ItemForm(instance=item)
     context = {
         'item_id': item_id,
         'form': form,
+        'item': item,
     }
     return HttpResponse(render(request, 'calc/item.html', context=context))
 
-'''django (4)
-def item(request, item_id):
-    item = get_object_or_404(Item, pk=item_id)
+def add_item(request):
     if request.method == 'POST':
-        form = ItemForm(request.POST, instance=item)
+        form = ItemForm(request.POST)
         if form.is_valid():
             form.save()
-            message = '保存しました'
+            return redirect('calc:items')
         else:
             message = 'エラーがあります'
     else:
-        form = ItemForm(instance=item)
+        form = ItemForm()
         message = ''
     context = {
-        'item_id': item_id,
         'form': form,
-        'message': message,
+        'message': message
     }
-    return HttpResponse(render(request, 'calc/item.html', context=context))
-'''
-
-def add_item(request):
-    pass
+    return HttpResponse(render(request, 'calc/add_item.html', context=context))
 
 def index(request):
     items = []
