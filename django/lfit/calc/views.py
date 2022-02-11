@@ -38,7 +38,7 @@ def item(request, item_id):
 
 def add_item(request):
     if request.method == 'POST':
-        form = ItemForm(request.POST)
+        form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('calc:items')

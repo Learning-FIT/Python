@@ -5,6 +5,11 @@
 {% block content %}
 <h1>明細登録</h1>
 {% include 'calc/nav.html' %}
+{% if item.image %}
+<div class="mb-3" style="width: 320px;">
+    <img class="img-fluid" src="{{ item.image.url }}">
+</div>
+{% endif %}
 <table class="table">
     <thead>
         <tr>
