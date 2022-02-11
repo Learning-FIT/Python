@@ -1,14 +1,15 @@
-from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 import datetime
 from django.utils.timezone import make_aware
 from .models import *
 from .forms import *
 
 
+@login_required
 def items(request):
     items = Item.objects.all()
     context = {
@@ -17,6 +18,7 @@ def items(request):
     return HttpResponse(render(request, 'calc/items.html', context=context))
 
 
+@login_required
 def item(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     if request.method == 'POST':
@@ -36,6 +38,8 @@ def item(request, item_id):
     }
     return HttpResponse(render(request, 'calc/item.html', context=context))
 
+
+@login_required
 def add_item(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
@@ -52,6 +56,7 @@ def add_item(request):
         'message': message
     }
     return HttpResponse(render(request, 'calc/add_item.html', context=context))
+
 
 def index(request):
     items = []
@@ -99,6 +104,7 @@ def index(request):
     }
     return HttpResponse(render(request, 'calc/index.html', context=context))
 
+
 def line(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     if request.method == 'POST':
@@ -122,6 +128,7 @@ def line(request, item_id):
     }
     return HttpResponse(render(request, 'calc/line.html', context=context))
 
+
 def cart(request):
     order_lines = []
     lines = request.session.get('lines', [])
@@ -142,11 +149,13 @@ def cart(request):
     }
     return HttpResponse(render(request, 'calc/cart.html', context=context))
 
+
 def cart_clear(request):
     if 'lines' in request.session:
         del request.session['lines']
     messages.info(request, 'ショッピングカートを空にしました')
     return redirect('calc:index')
+
 
 def order(request):
     order_lines = []
