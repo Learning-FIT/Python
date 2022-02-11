@@ -14,4 +14,5 @@ urlpatterns = [
     path('save_order/', views.save_order, name='save_order'),
     path('orders/', views.orders, name='orders'),
     path('order/<int:order_id>', views.order, name='order'),
+    path('items.json', views.items_json, name='items_json'),
 ]

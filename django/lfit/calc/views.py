@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
@@ -210,3 +210,17 @@ def save_order(request):
         'total_sum': total_sum,
     }
     return HttpResponse(render(request, 'calc/save_order.html', context=context))
+
+
+def items_json(request):
+    items = Item.objects.all()
+    results = []
+    for item in items:
+        results.append({
+            'id': item.id,
+            'code': item.code,
+            'name': item.name,
+            'price': item.price,
+            'image': item.image.url if item.image else '',
+        })
+    return JsonResponse({'items': results})
