@@ -1,0 +1,45 @@
+{% extends 'calc/layout.html' %}
+{% load humanize %}
+{% block title %}売上{% endblock %}
+
+{% block content %}
+<table class="table">
+    <tbody>
+        <tr>
+            <th>ID</th>
+            <td>{{ order.id }}</td>
+        </tr>
+        <tr>
+            <th>注文日時</th>
+            <td>{{ order.order_datetime }}</td>
+        </tr>
+        <tr>
+            <th>合計金額</th>
+            <td>{{ order.total_sum|intcomma }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>商品コード</th>
+            <th>商品名</th>
+            <th>単価</th>
+            <th>個数</th>
+            <th>小計</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order_line in order.orderline_set.all %}
+        <tr>
+            <td>{{ order_line.item.code }}</td>
+            <td>{{ order_line.item.name }}</td>
+            <td>{{ order_line.item.price|intcomma }}</td>
+            <td>{{ order_line.count }}</td>
+            <td>{{ order_line.sum|intcomma }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

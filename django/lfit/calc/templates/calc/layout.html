@@ -19,6 +19,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'calc:items' %}">商品管理</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'calc:orders' %}">売上一覧</a>
+                </li>
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'accounts:logout' %}">ログアウト</a>

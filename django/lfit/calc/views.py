@@ -58,6 +58,24 @@ def add_item(request):
     return HttpResponse(render(request, 'calc/add_item.html', context=context))
 
 
+@login_required
+def orders(request):
+    orders = Order.objects.all()
+    context = {
+        'orders': orders,
+    }
+    return HttpResponse(render(request, 'calc/orders.html', context=context))
+
+
+@login_required
+def order(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    context = {
+        'order': order,
+    }
+    return HttpResponse(render(request, 'calc/order.html', context=context))
+
+
 def index(request):
     items = []
     if request.method == 'POST':
