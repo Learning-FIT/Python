@@ -157,7 +157,7 @@ def cart_clear(request):
     return redirect('calc:index')
 
 
-def order(request):
+def save_order(request):
     order_lines = []
     lines = request.session.get('lines', [])
 
@@ -191,4 +191,4 @@ def order(request):
         'order_lines': order_lines,
         'total_sum': total_sum,
     }
-    return HttpResponse(render(request, 'calc/order.html', context=context))
+    return HttpResponse(render(request, 'calc/save_order.html', context=context))
