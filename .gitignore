@@ -356,3 +356,7 @@ instance/*
 
 calcapi/result/*
 *venv
+*.jpg
+*.png
+*.xlsx
+*.ipynb
