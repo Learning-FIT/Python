@@ -1,0 +1,16 @@
+<ul class="nav justify-content-center" style="margin: 1em auto;">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'calc:index' %}">商品検索</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'calc:cart' %}">ショッピングカート</a>
+    </li>
+</ul>
+
+{% if messages %}
+<div style="margin: 1em auto;">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}

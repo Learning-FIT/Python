@@ -1,0 +1,25 @@
+{% extends 'calc/layout.html' %}
+{% load humanize %}
+{% block title %}売上一覧{% endblock %}
+
+{% block content %}
+<h1>売上一覧</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>売上日時</th>
+            <th>売上金額</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td><a href="{% url 'calc:order' order.id %}">{{ order.order_datetime }}</a></td>
+            <td>{{ order.total_sum|intcomma }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
