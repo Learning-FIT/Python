@@ -224,3 +224,27 @@ def items_json(request):
             'image': item.image.url if item.image else '',
         })
     return JsonResponse({'items': results})
+
+
+def orders_json(request):
+    orders = Order.objects.all()
+    results = []
+    for order in orders:
+        order_lines = []
+        for order_line in order.orderline_set.all():
+            order_lines.append({
+                'id': order_line.id,
+                'price': order_line.price,
+                'count': order_line.count,
+                'item_code': order_line.item.code,
+                'item_name': order_line.item.name,
+                'item_image': order_line.item.image.url if order_line.item.image else '',
+                'sum': order_line.sum(),
+            })
+        results.append({
+            'id': order.id,
+            'order_datetime': order.order_datetime,
+            'total_sum': order.total_sum(),
+            'order_lines': order_lines,
+        })
+    return JsonResponse({'orders': results})
