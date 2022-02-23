@@ -1,0 +1,34 @@
+{% extends 'analysis/layout.html' %}
+{% block title %}Analysis{% endblock %}
+
+{% block content %}
+<h1>商品</h1>
+{% if messages %}
+<div style="margin: 1em auto;">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+<form action="{% url 'analysis:stocks' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="stock_code">
+    <input type="submit" value="商品コードで検索">
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>商品コード</th>
+            <th>品名</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for stock in stocks %}
+        <tr>
+            <td><a href="{% url 'analysis:stock' stock.id %}">{{ stock.stock_code }}</a></td>
+            <td>{{ stock.description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

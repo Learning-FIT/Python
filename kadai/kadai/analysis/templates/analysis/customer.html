@@ -1,0 +1,25 @@
+{% extends 'analysis/layout.html' %}
+{% block title %}Analysis{% endblock %}
+
+{% block content %}
+<h1>顧客</h1>
+<table class="table">
+    <tbody>
+        <tr>
+            <th>顧客ID</th>
+            <td>{{ customer.customer_id }}</td>
+        </tr>
+        <tr>
+            <th>国名</th>
+            <td>{{ customer.country }}</td>
+        </tr>
+        <tr>
+            <th>取引合計</th>
+            <td>{{ total }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>売上商品割合（上位10位）</h2>
+<img src="{% url 'analysis:plot_customer_stock' customer.id %}" alt="">
+{% endblock %}

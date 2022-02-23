@@ -360,3 +360,4 @@ calcapi/result/*
 *.png
 *.xlsx
 *.ipynb
+.DS_Store

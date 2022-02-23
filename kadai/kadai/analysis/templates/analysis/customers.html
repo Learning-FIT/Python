@@ -1,0 +1,34 @@
+{% extends 'analysis/layout.html' %}
+{% block title %}Analysis{% endblock %}
+
+{% block content %}
+<h1>顧客</h1>
+{% if messages %}
+<div style="margin: 1em auto;">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+<form action="{% url 'analysis:customers' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="customer_id">
+    <input type="submit" value="顧客IDで検索">
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>顧客ID</th>
+            <th>国名</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+        <tr>
+            <td><a href="{% url 'analysis:customer' customer.id %}">{{ customer.customer_id }}</a></td>
+            <td>{{ customer.country }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
