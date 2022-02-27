@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+
+# Day6 messagesフレームワーク
 from django.contrib.messages import constants as message_constants
 
 MESSAGE_TAGS = {
@@ -23,30 +25,27 @@ MESSAGE_TAGS = {
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-q6tyr72dotb*v-4z7s+vr+5#zn6bomuy221mnc$-=xc9x)_74+'
+SECRET_KEY = 'django-insecure-2ceejv=d5js*-7hn7ym45))sld1k)1pb*y@gwr6(ebe#4f%&kw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Day6 Django Toolbar 
 INTERNAL_IPS = ['127.0.0.1']
+
 
 # Application definition
 
 INSTALLED_APPS = [
     'hello.apps.HelloConfig',
     'calc.apps.CalcConfig',
+    # Day7 認証システム
     'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,7 +53,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Day6 フィルターの使用
     'django.contrib.humanize',
+    # Day6 Django Toolbar
     'debug_toolbar',
 ]
 
@@ -66,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Day6 Django Toolbar
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
@@ -127,10 +129,19 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
+''' オリジナル
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'UTC'
+'''
+
+# Day6 Djangoの設定を見直す
 LANGUAGE_CODE = 'ja'
-NUMBER_GROUPING=3
 
 TIME_ZONE = 'Asia/Tokyo'
+
+# Day6 フィルターの使用
+NUMBER_GROUPING=3
 
 USE_I18N = True
 
@@ -140,7 +151,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+# Day6 スタティックファイル
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = 'static/'
+
+# Day6 画像ファイルを使用する
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

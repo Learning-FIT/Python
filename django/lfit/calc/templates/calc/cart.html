@@ -1,5 +1,8 @@
 {% extends 'calc/layout.html' %}
+<!-- Day6 フィルターの使用 -->
+{% comment %}
 {% load humanize %}
+{% endcomment %}
 {% block title %}ショッピングカート{% endblock %}
 
 {% block content %}
@@ -20,14 +23,17 @@
         <tr>
             <td>{{ order_line.item.code }}</td>
             <td>{{ order_line.item.name }}</td>
-            <td>{{ order_line.item.price|intcomma }}</td>
+            <td>{{ order_line.item.price }}</td>
+            <!-- Day6 <td>{{ order_line.item.price|intcomma }}</td> -->
             <td>{{ order_line.count }}</td>
-            <td>{{ order_line.sum|intcomma }}</td>
+            <td>{{ order_line.sum }}</td>
+            <!-- Day6 <td>{{ order_line.sum|intcomma }}</td> -->
         </tr>
         {% endfor %}
         <tr>
             <th colspan="4">合計金額</th>
-            <th>{{ total_sum|intcomma }}</th>
+            <th>{{ total_sum }}</th>
+            <!-- Day6 <th>{{ total_sum|intcomma }}</th> -->
         </tr>
     </tbody>
 </table>

@@ -15,15 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+# Day6 画像ファイルを使用する
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('hello/', include('hello.urls')),
     path('calc/', include('calc.urls')),
+    # Day7 認証システム
     path('accounts/', include('accounts.urls')),
     path('admin/', admin.site.urls),
+    # Day6 Django Toolbar
     path('__debug__/', include('debug_toolbar.urls')),
+
 ]
+# Day6 画像ファイルを使用する
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
