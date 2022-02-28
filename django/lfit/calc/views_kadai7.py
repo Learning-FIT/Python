@@ -59,33 +59,27 @@ def index(request):
             if form.cleaned_data['code'] == '' and form.cleaned_data['name'] == '' and form.cleaned_data['price_min'] is None and form.cleaned_data['price_max'] is None:
                 messages.error(request, '商品コードか品名か価格のいずれかを入力してください')
             else:
-                items = Item.objects.all()
+                items = Item.objects
                 if form.cleaned_data['condition'] == 'and':
                     if form.cleaned_data['code'] != '':
                         items = items.filter(code=form.cleaned_data['code'])
                     if form.cleaned_data['name'] != '':
-                        items = items.filter(
-                            name__contains=form.cleaned_data['name'])
+                        items = items.filter(name__contains=form.cleaned_data['name'])
                     if form.cleaned_data['price_min'] != None:
-                        items = items.filter(price__gte=int(
-                            form.cleaned_data['price_min']))
+                        items = items.filter(price__gte=int(form.cleaned_data['price_min']))
                     if form.cleaned_data['price_max'] != None:
-                        items = items.filter(price__lte=int(
-                            form.cleaned_data['price_max']))
+                        items = items.filter(price__lte=int(form.cleaned_data['price_max']))
                 else:
                     q_obj = Q()
                     if form.cleaned_data['code'] != '':
                         q_obj.add(Q(code=form.cleaned_data['code']), Q.OR)
                     if form.cleaned_data['name'] != '':
-                        q_obj.add(
-                            Q(name__contains=form.cleaned_data['name']), Q.OR)
+                        q_obj.add(Q(name__contains=form.cleaned_data['name']), Q.OR)
                     q_price = Q()
                     if form.cleaned_data['price_min'] != None:
-                        q_price.add(
-                            Q(price__gte=int(form.cleaned_data['price_min'])), Q.AND)
+                        q_price.add(Q(price__gte=int(form.cleaned_data['price_min'])), Q.AND)
                     if form.cleaned_data['price_max'] != None:
-                        q_price.add(
-                            Q(price__lte=int(form.cleaned_data['price_max'])), Q.AND)
+                        q_price.add(Q(price__lte=int(form.cleaned_data['price_max'])), Q.AND)
                     q_obj.add(q_price, Q.AND)
                     print(items.filter(q_obj).query)
                     items = items.filter(q_obj)
