@@ -61,18 +61,15 @@ def index(request):
             if form.cleaned_data['code'] == '' and form.cleaned_data['name'] == '' and form.cleaned_data['price_min'] is None and form.cleaned_data['price_max'] is None:
                 messages.error(request, '商品コードか品名か価格のいずれかを入力してください')
             else:
-                items = Item.objects.all()
+                items = Item.objects
                 if form.cleaned_data['code'] != '':
                     items = items.filter(code=form.cleaned_data['code'])
                 if form.cleaned_data['name'] != '':
-                    items = items.filter(
-                        name__contains=form.cleaned_data['name'])
+                    items = items.filter(name__contains=form.cleaned_data['name'])
                 if form.cleaned_data['price_min'] != None:
-                    items = items.filter(price__gte=int(
-                        form.cleaned_data['price_min']))
+                    items = items.filter(price__gte=int(form.cleaned_data['price_min']))
                 if form.cleaned_data['price_max'] != None:
-                    items = items.filter(price__lte=int(
-                        form.cleaned_data['price_max']))
+                    items = items.filter(price__lte=int(form.cleaned_data['price_max']))
                 if len(items) < 1:
                     messages.info(request, '商品が見つかりません')
         else:
