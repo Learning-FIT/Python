@@ -12,6 +12,7 @@
             <th>商品コード</th>
             <th>商品名</th>
             <th>単価</th>
+            <th>画像</th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,12 @@
             <td><a href="{% url 'calc:item' item.id %}">{{ item.code }}</a></td>
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
+            <td>
+                {% if item.thumb_image %}
+                <img src="{{ item.thumb_image }}">
+                {% endif %}
+                &nbsp;
+            </td>
         </tr>
         {% endfor %}
     </tbody>

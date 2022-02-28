@@ -8,6 +8,10 @@ from django.utils.timezone import make_aware
 from .models import *
 from .forms import *
 
+# 画像処理 課題
+from PIL import Image
+import os
+from django.conf import settings
 
 @login_required
 def items(request):
@@ -25,6 +29,10 @@ def item(request, item_id):
         form = ItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
             item = form.save()
+
+            # 画像処理 課題
+            make_thumb(item.id, item.image.path)
+
             messages.success(request, '保存しました')
         else:
             print(form.errors)
@@ -44,7 +52,11 @@ def add_item(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            item = form.save()
+
+            # 画像処理 課題
+            make_thumb(item.id, item.image.path)
+
             return redirect('calc:items')
         else:
             message = 'エラーがあります'
@@ -247,3 +259,34 @@ def orders_json(request):
             'order_lines': order_lines,
         })
     return JsonResponse({'orders': results})
+
+
+# 画像処理 課題
+def make_thumb(item_id, img_path):
+    img = Image.open(img_path)
+    width = img.size[0]
+    height = img.size[1]
+
+    if width < height:
+        new_width = 100
+        ratio = width / new_width
+        new_height = int(height / ratio)
+        left = 0
+        right = 100
+        upper = int((new_height - 100) / 2)
+        lower = upper + 100
+    else:
+        new_height = 100
+        ratio = height / new_height
+        new_width = int(width / ratio)
+        left = int((new_width - 100) / 2)
+        right = left + 100
+        upper = 0
+        lower = 100
+        
+    img_small = img.resize((new_width, new_height))
+    img_crop = img_small.crop((left, upper, right, lower))
+    thumb_path = os.path.join(settings.MEDIA_ROOT, 'thumb')
+    if not os.path.exists(thumb_path):
+        os.mkdir(thumb_path)
+    img_crop.save(os.path.join(thumb_path, f'{item_id}.jpg'))
