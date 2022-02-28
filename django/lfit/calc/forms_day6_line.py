@@ -5,7 +5,7 @@ from .models import *
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ['code', 'name', 'price', 'image']
+        fields = ['code', 'name', 'price']
 
 class ItemSearchForm(forms.Form):
     code = forms.CharField(label='商品コード', required=False)

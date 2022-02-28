@@ -1,9 +1,6 @@
-from email.policy import default
-from importlib.metadata import requires
 from django.db import models
 
 class Item(models.Model):
-    # code = models.CharField(max_length=10, verbose_name='商品コード')
     code = models.CharField(max_length=10, verbose_name='商品コード', unique=True)
     name = models.CharField(max_length=255, verbose_name='商品名')
     price = models.IntegerField(verbose_name='単価')
