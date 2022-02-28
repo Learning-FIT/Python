@@ -15,6 +15,9 @@ urlpatterns = [
     # Day6 ショッピングカートを空にする、注文
     path('cart_clear/', views.cart_clear, name='cart_clear'),
     path('save_order/', views.save_order, name='save_order'),
+    # 課題（10）
+    path('orders/', views.orders, name='orders'),
+    path('order/<int:order_id>', views.order, name='order'),
     # Day7 API
     path('items.json', views.items_json, name='items_json'),
     # 課題（11）
