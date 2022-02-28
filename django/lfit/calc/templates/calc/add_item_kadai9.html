@@ -19,11 +19,6 @@
             {{ item.errors }}
       </div>
     {% endfor %}
-    {% if item.image %}
-    <div class="mb-3" style="width: 320px;">
-        <img class="img-fluid" src="{{ item.image.url }}">
-    </div>
-    {% endif %}
     <input type="submit" class="btn btn-primary" value="保存">
 </form>
 {% endblock %}
