@@ -1,5 +1,4 @@
 {% extends 'calc/layout.html' %}
-{% load humanize %}
 {% block title %}ショッピングカート{% endblock %}
 
 {% block content %}
@@ -20,14 +19,14 @@
         <tr>
             <td>{{ order_line.item.code }}</td>
             <td>{{ order_line.item.name }}</td>
-            <td>{{ order_line.item.price|intcomma }}</td>
+            <td>{{ order_line.item.price }}</td>
             <td>{{ order_line.count }}</td>
-            <td>{{ order_line.sum|intcomma }}</td>
+            <td>{{ order_line.sum }}</td>
         </tr>
         {% endfor %}
         <tr>
             <th colspan="4">合計金額</th>
-            <th>{{ total_sum|intcomma }}</th>
+            <th>{{ total_sum }}</th>
         </tr>
     </tbody>
 </table>

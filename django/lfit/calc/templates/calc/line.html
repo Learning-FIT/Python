@@ -1,8 +1,5 @@
 {% extends 'calc/layout.html' %}
-<!-- Day6 フィルターの使用 -->
-{% comment %}
 {% load humanize %}
-{% endcomment %}
 {% block title %}明細登録{% endblock %}
 
 {% block content %}
@@ -21,7 +18,7 @@
             <td>{{ item.code }}</td>
             <td>{{ item.name }}</a></td>
             <td>{{ item.price }}</td>
-            <!-- Day6 <td>{{ item.price|intcomma }}</td> -->
+            <td>{{ item.price|intcomma }}</td>
         </tr>
     </tbody>
 </table>
