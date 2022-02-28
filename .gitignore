@@ -359,5 +359,4 @@ calcapi/result/*
 *.jpg
 *.png
 *.xlsx
-*.ipynb
 .DS_Store
