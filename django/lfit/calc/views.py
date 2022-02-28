@@ -61,26 +61,26 @@ def add_item(request):
 
 # Day6 商品検索の作成
 def index(request):
-    items = []
     if request.method == 'POST':
         form = ItemSearchForm(request.POST)
+        items = []
         if form.is_valid():
             #items = Item.objects.filter(code=form.cleaned_data['code'])
-            if form.cleaned_data['code'] == '' and form.cleaned_data['name'] == '' and form.cleaned_data['price_min'] is None and form.cleaned_data['price_max'] is None:
-                messages.error(request, '商品コードか品名か価格のいずれかを入力してください')
+            if form.cleaned_data['code'] == '' and form.cleaned_data['name'] == '':
+                messages.error(request, '商品コードか品名のどちらかを入力してください')
             else:
-                items = Item.objects.all()
-                if form.cleaned_data['condition'] == 'and':
-                    if form.cleaned_data['code'] != '':
-                        items = items.filter(code=form.cleaned_data['code'])
-                    if form.cleaned_data['name'] != '':
-                        items = items.filter(name__contains=form.cleaned_data['name'])
+                items = Item.objects
+                if form.cleaned_data['code'] != '':
+                    items = items.filter(code=form.cleaned_data['code'])
+                if form.cleaned_data['name'] != '':
+                    items = items.filter(name__contains=form.cleaned_data['name'])
                 if len(items) < 1:
                     messages.info(request, '商品が見つかりません')
         else:
             messages.error(request, '入力エラーがあります')
     else:
         form = ItemSearchForm()
+        items = []
     context = {
         'form': form,
         'items': items,
