@@ -31,7 +31,8 @@ def item(request, item_id):
             item = form.save()
 
             # 画像処理 課題
-            make_thumb(item.id, item.image.path)
+            if item.image:
+                make_thumb(item.id, item.image.path)
 
             messages.success(request, '保存しました')
         else:
@@ -55,7 +56,8 @@ def add_item(request):
             item = form.save()
 
             # 画像処理 課題
-            make_thumb(item.id, item.image.path)
+            if item.image:
+                make_thumb(item.id, item.image.path)
 
             return redirect('calc:items')
         else:
