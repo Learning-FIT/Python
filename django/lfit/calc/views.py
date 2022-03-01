@@ -269,16 +269,16 @@ def make_thumb(item_id, img_path):
 
     if width < height:
         new_width = 100
-        ratio = width / new_width
-        new_height = int(height / ratio)
+        ratio = new_width / width
+        new_height = int(height * ratio)
         left = 0
         right = 100
         upper = int((new_height - 100) / 2)
         lower = upper + 100
     else:
         new_height = 100
-        ratio = height / new_height
-        new_width = int(width / ratio)
+        ratio = new_height / height
+        new_width = int(width * ratio)
         left = int((new_width - 100) / 2)
         right = left + 100
         upper = 0
